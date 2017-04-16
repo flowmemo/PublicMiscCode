@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <map>
+#include <numeric>
 #include <set>
 #include <sstream>
 #include <string>
@@ -10,7 +11,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-#include <numeric>
 
 namespace tool {
 
@@ -103,7 +103,6 @@ void iota(ForwardIter first, ForwardIter last, T val) {
   }
 }
 
-
 // https://github.com/boostorg/functional/blob/develop/include/boost/functional/hash/hash.hpp
 // https://github.com/boostorg/functional/blob/develop/include/boost/functional/hash/extensions.hpp
 template <typename SizeT>
@@ -130,8 +129,6 @@ std::size_t hash_value(std::pair<A, B> const& v) {
 namespace std {
 template <typename T1, typename T2>
 struct hash<pair<T1, T2>> {
-  size_t operator()(const pair<T1, T2> &k) const {
-    return hash_value(k);
-  }
+  size_t operator()(const pair<T1, T2>& k) const { return tool::hash_value(k); }
 };
 }
