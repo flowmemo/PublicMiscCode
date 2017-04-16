@@ -1,4 +1,3 @@
-// for debug
 #include <iostream>
 #include <map>
 #include <set>
@@ -6,6 +5,23 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include <cmath>
+#include <numeric>
+#include <algorithm>
+#include <string>
+#include <sstream>
+#include <iomanip>
+/*
+// custom hash function
+namespace std {
+template <>
+struct hash<pair<int, int>>> {
+  size_t operator()(const pair<int,int> &k) const {
+    return hash<int>()(k.first) ^ hash<int>()(k.second);
+  }
+};
+}
+*/
 
 namespace tool {
 
@@ -97,5 +113,4 @@ void iota(ForwardIter first, ForwardIter last, T val) {
     *first++ = val++;
   }
 }
-
 }
