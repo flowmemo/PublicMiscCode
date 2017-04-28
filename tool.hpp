@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -11,7 +12,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-
 namespace tool {
 
 using namespace std;
@@ -123,6 +123,65 @@ std::size_t hash_value(std::pair<A, B> const& v) {
   hash_combine(seed, v.second);
   return seed;
 }
+
+// math
+using ll = long long;
+ll pow(ll n, ll k) {
+  assert(k >= 0);
+  ll ret = 1;
+  ll base = n;
+  while (k) {
+    if (k & 1) {
+      ret *= base;
+    }
+    base *= base;
+    k /= 2;
+  }
+  return ret;
+}
+
+ll pow_mod(ll n, ll k, ll m) {
+  assert(k >= 0);
+  assert(m > 0);
+  ll ret = 1;
+  ll base = n % m;
+  while (k) {
+    if (k & 1) {
+      ret = (ret * base) % m;
+    }
+    base = (base * base) % m;
+    k /= 2;
+  }
+  return ret;
+}
+
+ll choose(ll n, ll k) {
+  ll ret = 1;
+  for (ll i = 1; i <= k; ++i) {
+    ret *= n--;
+    ret /= i;
+  }
+  return ret;
+}
+
+ll perm(ll n, ll k) {
+  ll ret = 1;
+  while (k--) {
+    ret *= n--;
+  }
+  return ret;
+}
+
+ll perm_mod(ll n, ll k, const ll m) {
+  assert(m > 0);
+  ll ret = 1;
+  while (k--) {
+    ret = (ret * (n--) % m) % m;
+  }
+  return ret;
+}
+
+ll factorial(ll n) { return perm(n, n); }
 }
 
 // custom hash function
