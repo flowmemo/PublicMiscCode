@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <cassert>
+#include <climits>
 #include <cmath>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -126,6 +128,19 @@ std::size_t hash_value(std::pair<A, B> const& v) {
 
 // math
 using ll = long long;
+bool is_prime(ll n) {
+  // O(sqrt(n)) time complexity
+  assert(n >= 0);
+  if (n <= 1) return false;
+  if (n <= 3) return true;
+  if (!(n % 3) || !(n % 2)) return false;
+  const ll limit = sqrt(double(n)) + 1E-5;
+  for (int i = 5; i <= limit; i += 6) {
+    if (!(n % i) || !(n % (i + 2))) return false;
+  }
+  return true;
+}
+
 ll pow(ll n, ll k) {
   assert(k >= 0);
   ll ret = 1;
