@@ -14,6 +14,12 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+
+/*
+-Wall -Wextra -pedantic -std=c++11 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector
+Ref: http://codeforces.com/blog/entry/15547?locale=en
+*/
+
 namespace tool {
 
 using namespace std;
@@ -134,7 +140,7 @@ bool is_prime(ll n) {
   if (n <= 1) return false;
   if (n <= 3) return true;
   if (!(n % 3) || !(n % 2)) return false;
-  const ll limit = sqrt(double(n)) + 1E-5;
+  const ll limit = ll(sqrt(double(n)) + 1E-5);
   for (int i = 5; i <= limit; i += 6) {
     if (!(n % i) || !(n % (i + 2))) return false;
   }
