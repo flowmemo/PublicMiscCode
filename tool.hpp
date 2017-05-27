@@ -52,9 +52,6 @@ void printIt(const C& cont, typename C::const_iterator it,
 template <typename T>
 void printCont(const T& v);
 
-template <typename ForwardIter, typename T>
-void iota(ForwardIter first, ForwardIter last, T val);
-
 // implement
 
 template <typename T>
@@ -104,12 +101,14 @@ void printCont(const T& v) {
   printIt(v, v.cbegin(), v.cend());
 }
 
+/*
 template <typename ForwardIter, typename T>
 void iota(ForwardIter first, ForwardIter last, T val) {
   while (first != last) {
     *first++ = val++;
   }
 }
+*/
 
 // https://github.com/boostorg/functional/blob/develop/include/boost/functional/hash/hash.hpp
 // https://github.com/boostorg/functional/blob/develop/include/boost/functional/hash/extensions.hpp
