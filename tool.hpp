@@ -52,6 +52,10 @@ void printIt(const C& cont, typename C::const_iterator it,
 template <typename T>
 void printCont(const T& v);
 
+vector<string> split(const string&, const string &);
+vector<string> split(const string&, const char);
+
+
 // implement
 
 template <typename T>
@@ -101,6 +105,30 @@ void printCont(const T& v) {
   printIt(v, v.cbegin(), v.cend());
 }
 
+vector<string> split(const string& s, const string &delimiter) {
+  int p = 0;
+  int np = -1;
+  vector<string> ret;
+  while((np = s.find(delimiter, p)) != -1) {
+    ret.emplace_back(s.begin() + p, s.begin() + np);
+    p = np + 1;
+  }
+  ret.emplace_back(s.begin() + p, s.end());
+  return ret;
+}
+
+vector<string> split(const string& s, const char c) {
+  const string delimiter(1, c);
+  int p = 0;
+  int np = -1;
+  vector<string> ret;
+  while((np = s.find(delimiter, p)) != -1) {
+    ret.emplace_back(s.begin() + p, s.begin() + np);
+    p = np + 1;
+  }
+  ret.emplace_back(s.begin() + p, s.end());
+  return ret;
+}
 /*
 template <typename ForwardIter, typename T>
 void iota(ForwardIter first, ForwardIter last, T val) {
