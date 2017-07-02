@@ -16,7 +16,10 @@
 #include <vector>
 
 /*
--Wall -Wextra -pedantic -std=c++11 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector
+-Wall -Wextra -pedantic -std=c++11 -O2 -Wshadow -Wformat=2 -Wfloat-equal \
+-Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual \
+-Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 \
+-fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector
 Ref: http://codeforces.com/blog/entry/15547?locale=en
 */
 
@@ -52,9 +55,8 @@ void printIt(const C& cont, typename C::const_iterator it,
 template <typename T>
 void printCont(const T& v);
 
-vector<string> split(const string&, const string &);
+vector<string> split(const string&, const string&);
 vector<string> split(const string&, const char);
-
 
 // implement
 
@@ -105,11 +107,11 @@ void printCont(const T& v) {
   printIt(v, v.cbegin(), v.cend());
 }
 
-vector<string> split(const string& s, const string &delimiter) {
+vector<string> split(const string& s, const string& delimiter) {
   int p = 0;
   int np = -1;
   vector<string> ret;
-  while((np = s.find(delimiter, p)) != -1) {
+  while ((np = s.find(delimiter, p)) != -1) {
     ret.emplace_back(s.begin() + p, s.begin() + np);
     p = np + 1;
   }
@@ -122,7 +124,7 @@ vector<string> split(const string& s, const char c) {
   int p = 0;
   int np = -1;
   vector<string> ret;
-  while((np = s.find(delimiter, p)) != -1) {
+  while ((np = s.find(delimiter, p)) != -1) {
     ret.emplace_back(s.begin() + p, s.begin() + np);
     p = np + 1;
   }
@@ -161,6 +163,17 @@ std::size_t hash_value(std::pair<A, B> const& v) {
 
 // math
 using ll = long long;
+
+ll gcd(ll a, ll b) {
+  assert(a > 0 && b > 0);
+  while (b) {
+    ll tmp = a % b;
+    a = b;
+    b = tmp;
+  }
+  return a;
+}
+
 bool is_prime(ll n) {
   // O(sqrt(n)) time complexity
   assert(n >= 0);
@@ -230,6 +243,45 @@ ll perm_mod(ll n, ll k, const ll m) {
 }
 
 ll factorial(ll n) { return perm(n, n); }
+
+// return a % b (positive value)
+ll mod(ll a, ll b) {
+  assert(b > 0);
+  return ((a % b) + b) % b;
+}
+
+// returns g = gcd(a, b); finds x, y such that d = ax + by
+// source: stanfordacm
+ll extended_euclid(ll a, ll b, ll& x, ll& y) {
+  ll xx = y = 0;
+  ll yy = x = 1;
+  while (b) {
+    ll q = a / b;
+    ll t = b;
+    b = a % b;
+    a = t;
+    t = xx;
+    xx = x - q * xx;
+    x = t;
+    t = yy;
+    yy = y - q * yy;
+    y = t;
+  }
+  return a;
+}
+
+// computes b such that ab = 1 (mod n), returns -1 on failure
+// source: stanfordacm
+ll mod_inverse(ll a, ll n) {
+  assert(a >= 0 && n > 0);
+  ll x, y;
+  ll g = extended_euclid(a, n, x, y);
+  if (g > 1) {
+    assert(g != -1);
+    return -1;
+  }
+  return mod(x, n);
+}
 }
 
 // custom hash function
