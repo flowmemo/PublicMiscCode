@@ -37,7 +37,8 @@ Ref: http://codeforces.com/blog/entry/15547?locale=en
 namespace tool {
 
 using namespace std;
-
+using ll = long long;
+using ull = unsigned long long;
 template <typename T>
 void print(const T&, typename T::const_iterator it);
 
@@ -173,7 +174,6 @@ std::size_t hash_value(std::pair<A, B> const& v) {
 }
 
 // math
-using ll = long long;
 
 ll gcd(ll a, ll b) {
   assert(a > 0 && b > 0);
@@ -293,7 +293,31 @@ ll mod_inverse(ll a, ll n) {
   }
   return mod(x, n);
 }
+
+// IPv4-UINT32 convert
+unsigned s2x(const string& s) {
+  unsigned a, b, c, d;
+  const int ct = sscanf(s.c_str(), "%u.%u.%u.%u", &a, &b, &c, &d);
+  assert(ct == 4);
+  assert((a | b | c | d) <= 255U);
+  return (a << 24) + (b << 16) + (c << 8) + d;
 }
+
+string x2s(ull x) {
+  assert(x <= 0xffffffff);
+  unsigned a, b, c, d;
+  d = x & 255;
+  x >>= 8;
+  c = x & 255;
+  x >>= 8;
+  b = x & 255;
+  x >>= 8;
+  a = x & 255;
+  return to_string(a) + "." + to_string(b) + "." + to_string(c) + "." +
+         to_string(d);
+}
+
+}  // namespace tool end
 
 // custom hash function
 namespace std {
@@ -301,4 +325,4 @@ template <typename T1, typename T2>
 struct hash<pair<T1, T2>> {
   size_t operator()(const pair<T1, T2>& k) const { return tool::hash_value(k); }
 };
-}
+}  // namespace std end
